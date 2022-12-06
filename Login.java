@@ -3,11 +3,18 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import java.awt.Color;
+import java.awt.event.*;
 
-public class Login extends JFrame {
+public class Login extends JFrame implements ActionListener {
+
+    JButton login, signup, clear;
+    JTextField cardNumField, cardPinField;
+    JPasswordField pinTexField;
+
     Login() {
 
         setLayout(null);
@@ -24,7 +31,7 @@ public class Login extends JFrame {
         cardnum.setFont(new Font("Raleway", Font.BOLD, 28));
         add(cardnum);
 
-        JTextField cardNumField = new JTextField();
+        cardNumField = new JTextField();
         cardNumField.setBounds(200, 150, 250, 40);
         add(cardNumField);
 
@@ -33,26 +40,42 @@ public class Login extends JFrame {
         cardpin.setFont(new Font("Raleway", Font.BOLD, 28));
         add(cardpin);
 
-        JTextField cardPinField = new JTextField();
+        cardPinField = new JPasswordField();
         cardPinField.setBounds(200, 220, 250, 40);
         add(cardPinField);
 
-        JButton login = new JButton("sign in");
+        login = new JButton("sign in");
         login.setBounds(300, 300, 100, 30);
+        login.addActionListener(this);
         add(login);
 
-        JButton clear = new JButton("clear");
+        clear = new JButton("clear");
         clear.setBounds(430, 300, 100, 30);
+        clear.addActionListener(this);
         add(clear);
 
-        JButton signup = new JButton("sign up");
+        signup = new JButton("sign up");
         signup.setBounds(300, 350, 230, 30);
+        signup.addActionListener(this);
         add(signup);
 
         setTitle("BMS");
         setSize(800, 500);
         setVisible(true);
         setLocation(350, 200);
+
+    }
+
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource() == clear) {
+            cardNumField.setText("");
+            cardPinField.setText("");
+
+        } else if (ae.getSource() == login) {
+
+        } else if (ae.getSource() == signup) {
+
+        }
 
     }
 
