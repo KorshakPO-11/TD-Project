@@ -1,10 +1,6 @@
 import java.awt.Font;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.event.*;
@@ -74,6 +70,8 @@ public class Login extends JFrame implements ActionListener {
         } else if (ae.getSource() == login) {
 
         } else if (ae.getSource() == signup) {
+            setVisible(false);
+            new signup1().setVisible(true);
 
         }
 
