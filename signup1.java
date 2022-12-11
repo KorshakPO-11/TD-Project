@@ -11,7 +11,7 @@ import com.toedter.calendar.JDateChooser;
 public class signup1 extends JFrame implements ActionListener{
 
     long random;
-    JTextField nameTextField, fnameTextField, adressTextField, emailTextField, pinTextField, cityTextField;
+    JTextField nameTextField, fnameTextField, adressTextField, emailTextField, pinTextField, cityTextField, telnumberTextField;
     JButton next;
     JRadioButton male, female, married, unmarried, other;
     JDateChooser dateChooser;
@@ -24,12 +24,12 @@ public class signup1 extends JFrame implements ActionListener{
         Random ran = new Random();
         long random = Math.abs((ran.nextLong() % 9000L) + 1000L);
 
-        JLabel formnum = new JLabel("aplication form num." + random);
+        JLabel formnum = new JLabel("Форма номер." + random);
         formnum.setFont(new Font("Raleway", Font.BOLD, 38));
         formnum.setBounds(140, 20, 600, 40);
         add(formnum);
 
-        JLabel personaldetails = new JLabel("Personal details");
+        JLabel personaldetails = new JLabel("Персональні дані");
         personaldetails.setFont(new Font("Raleway", Font.BOLD, 30));
         personaldetails.setBounds(290, 80, 400, 30);
         add(personaldetails);
@@ -133,14 +133,14 @@ public class signup1 extends JFrame implements ActionListener{
         adressTextField.setBounds(310, 490, 400, 30);
         add(adressTextField);
 
-        JLabel pin = new JLabel("ПІН код:");
-        pin.setFont(new Font("Raleway", Font.BOLD, 20));
-        pin.setBounds(100, 540, 400, 30);
-        add(pin);
+        JLabel telnumber = new JLabel("Номер телефону:");
+        telnumber.setFont(new Font("Номер телефону", Font.BOLD, 20));
+        telnumber.setBounds(100, 540, 400, 30);
+        add(telnumber);
 
-        pinTextField = new JTextField();
-        pinTextField.setBounds(300, 540, 400, 30);
-        add(pinTextField);
+        telnumberTextField = new JTextField();
+        telnumberTextField.setBounds(300, 540, 400, 30);
+        add(telnumberTextField);
 
         setTitle("signup");
         setSize(850, 800);
@@ -166,7 +166,7 @@ public class signup1 extends JFrame implements ActionListener{
         String fname = fnameTextField.getText();
         String email = emailTextField.getText();
         String city = cityTextField.getText();
-        String pin = pinTextField.getText();
+        String telnumber = telnumberTextField.getText();
         String adress = adressTextField.getText();
 
         String dateofbirth = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
@@ -192,9 +192,14 @@ public class signup1 extends JFrame implements ActionListener{
         try{
             if (name.equals("")){
                 JOptionPane.showMessageDialog(null, "Данні відсутні");
-            }else{
+            }else if (name.equals(" ")){
+                    JOptionPane.showMessageDialog(null, "Данні відсутні");
+
+            } else {
+                
+            
                 conmysql c = new conmysql();
-                String Query = "insert into signup1 values('"+formnum+"','"+name+"','"+fname+"','"+dateofbirth+"','"+gender+"','"+email+"','"+marital+"','"+adress+"','"+city+"','"+pin+"')";
+                String Query = "insert into signup1 values('"+formnum+"','"+name+"','"+fname+"','"+dateofbirth+"','"+gender+"','"+email+"','"+marital+"','"+adress+"','"+city+"','"+telnumber+"')";
                 c.s.executeUpdate(Query);
 
             }
@@ -207,24 +212,6 @@ public class signup1 extends JFrame implements ActionListener{
 
 
 
-    
-
-
-
-
-       
-    
-            
-                
-    
-           
-    
-        
-    
-
-    
-    
-        
     public static void main(String[] args) {
         new signup1();
     }
