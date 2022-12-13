@@ -148,7 +148,7 @@ public class signup1 extends JFrame implements ActionListener{
         setVisible(true);
         getContentPane().setBackground(Color.white);
 
-        JButton next = new JButton("next");
+        JButton next = new JButton("Далі");
         next.setBounds(620, 660, 80, 30);
         next.addActionListener(this);
         
@@ -159,6 +159,8 @@ public class signup1 extends JFrame implements ActionListener{
     
     }
     public void actionPerformed(ActionEvent ae) {
+
+        
 
         String formnum = "" + random;
         
@@ -187,13 +189,14 @@ public class signup1 extends JFrame implements ActionListener{
         }else if(other.isSelected()){ 
             marital = "інше";
         }
+
+       
        
 
         try{
             if (name.equals("")){
                 JOptionPane.showMessageDialog(null, "Данні відсутні");
-            }else if (name.equals(" ")){
-                    JOptionPane.showMessageDialog(null, "Данні відсутні");
+            
 
             } else {
                 
@@ -201,6 +204,8 @@ public class signup1 extends JFrame implements ActionListener{
                 conmysql c = new conmysql();
                 String Query = "insert into signup1 values('"+formnum+"','"+name+"','"+fname+"','"+dateofbirth+"','"+gender+"','"+email+"','"+marital+"','"+adress+"','"+city+"','"+telnumber+"')";
                 c.s.executeUpdate(Query);
+                setVisible(false);
+                new signup2().setVisible(true);
 
             }
 
@@ -208,7 +213,8 @@ public class signup1 extends JFrame implements ActionListener{
             System.out.println(e);
 
         }
-        }
+    }
+        
 
 
 
