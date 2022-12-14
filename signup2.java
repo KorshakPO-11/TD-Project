@@ -25,6 +25,15 @@ public class signup2 extends JFrame implements ActionListener{
         passwordTextField.setBounds(100, 200, 100, 30);
         add(passwordTextField);
 
+        JLabel passwordacces = new JLabel("підтверділь пароль");
+        passwordacces.setFont(new Font("Raleway", Font.BOLD, 20));
+        passwordacces.setBounds(100, 240, 200, 30);
+        add(passwordacces);
+
+        passwordaccesTextField = new JTextField();
+        passwordaccesTextField.setBounds(100, 300, 100, 30);
+        add(passwordaccesTextField);
+
 
         JLabel cardnum  = new JLabel("Card Number:");
         cardnum.setFont(new Font("Raleway", Font.BOLD, 18));
@@ -69,6 +78,7 @@ public class signup2 extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
 
         String password = passwordTextField.getText();
+        String passwordacces = passwordaccesTextField.getText();
         
 
         Random ran = new Random();
@@ -89,6 +99,10 @@ public class signup2 extends JFrame implements ActionListener{
 
                
                 
+                }if(!passwordacces.equals(password)){
+                    JOptionPane.showMessageDialog(null, "Пароль не співпадає");
+
+
                 }else{
                     conmysql c = new conmysql();
                     String Query1 = "insert into signup2 values('"+cardno+"','"+pin+"','"+password+"')";
@@ -114,9 +128,10 @@ public class signup2 extends JFrame implements ActionListener{
     }
     
 
-
     public static void main(String[] args) {
         new signup2();
     }
+
+
 }
 
