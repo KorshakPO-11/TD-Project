@@ -3,6 +3,7 @@ import java.util.Random;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.Font;
+import java.util.regex.*;
 
 public class signup2 extends JFrame implements ActionListener{
 
@@ -94,7 +95,14 @@ public class signup2 extends JFrame implements ActionListener{
         try{
             if(ae.getSource()== reg ){
                 
-                if(password.equals("")){
+                
+                
+                if (!(Pattern.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$", password))) {
+                    JOptionPane.showMessageDialog(null, "Введіть прийнятний пароль", "Помилка", JOptionPane.ERROR_MESSAGE);
+                    return;
+                
+                
+                }if(password.equals("")){
                     JOptionPane.showMessageDialog(null, "Введіть пароль для реєстрації");
 
                
@@ -109,7 +117,7 @@ public class signup2 extends JFrame implements ActionListener{
 
                     c.s.executeUpdate(Query1); 
 
-                    String Query2 = "insert into login values('"+cardno+"','"+password+"')";
+                    String Query2 = "insert into login values('"+cardno+"','"+password+"', '"+pin+"')";
 
                     c.s.executeUpdate(Query2);
                     JOptionPane.showMessageDialog(null, "Card Number: " + cardno + "\n Pin:"+ pin);
@@ -120,6 +128,7 @@ public class signup2 extends JFrame implements ActionListener{
             }else if(ae.getSource()==cancel){
                 System.exit(0);
             }
+            
             
         }catch(Exception ex){
             ex.printStackTrace();
