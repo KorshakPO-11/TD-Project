@@ -1,11 +1,10 @@
 import java.awt.Color;
-import java.util.Random;
+import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.regex.*;
 
 import java.awt.Font;
-
-
 import com.toedter.calendar.JDateChooser;
 
 public class signup1 extends JFrame implements ActionListener{
@@ -154,7 +153,6 @@ public class signup1 extends JFrame implements ActionListener{
         
 
         add(next);
-
        
     
     }
@@ -194,7 +192,14 @@ public class signup1 extends JFrame implements ActionListener{
        
 
         try{
-            if (name.equals("")){
+
+            if (!(Pattern.matches("^[a-zA-Z0-9]+[@]{1}+[a-zA-Z0-9]+[.]{1}+[a-zA-Z0-9]+$", email))) 
+{
+            JOptionPane.showMessageDialog(null, "Please enter a valid email", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            
+            else if (name.equals("")){
                 JOptionPane.showMessageDialog(null, "Данні відсутні");
             
 
@@ -211,10 +216,8 @@ public class signup1 extends JFrame implements ActionListener{
 
         }catch (Exception e){
             System.out.println(e);
-
         }
     }
-        
 
 
 
@@ -222,3 +225,5 @@ public class signup1 extends JFrame implements ActionListener{
         new signup1();
     }
 }
+
+
