@@ -11,8 +11,9 @@ import java.sql.*;
 public class Login extends JFrame implements ActionListener {
 
     JButton login, signup;
-    JTextField cardnoField, passwordTextField;
+    JTextField cardnoField, pinTextField, passwordTextField;
     JPasswordField passwordField;
+    
 
     Login() {
 
@@ -23,7 +24,7 @@ public class Login extends JFrame implements ActionListener {
         text.setFont(new Font("Osward", Font.BOLD, 38));
         add(text);
 
-        getContentPane().setBackground(Color.WHITE);
+        getContentPane().setBackground(Color.darkGray);
 
         JLabel cardno = new JLabel("Номер карти");
         cardno.setBounds(120, 150, 200, 40);
@@ -39,9 +40,9 @@ public class Login extends JFrame implements ActionListener {
         password.setFont(new Font("Raleway", Font.BOLD, 28));
         add(password);
 
-        passwordTextField = new JPasswordField();
-        passwordTextField.setBounds(300, 220, 250, 40);
-        add(passwordTextField);
+        pinTextField = new JPasswordField();
+        pinTextField.setBounds(300, 220, 250, 40);
+        add(pinTextField);
 
         login = new JButton("Увійти");
         login.setBounds(300, 300, 100, 30);
@@ -66,13 +67,14 @@ public class Login extends JFrame implements ActionListener {
         if (ae.getSource() == login) {
             conmysql c = new conmysql();
             String cardno = cardnoField.getText();
-            String password = passwordTextField.getText();
-            String Query = "select * from login where cardno = '"+cardno+"' and password = '"+password+"'";
+            String pin = pinTextField.getText();
+            
+            String Query = "select * from login where cardno = '"+cardno+"' and pin = '"+pin+"' ";
             try{
                 ResultSet rs = c.s.executeQuery(Query);
                 if(rs.next()){
                     setVisible(false);
-                    new transactionsmenu(password).setVisible(true);
+                    new transactionsmenu(pin).setVisible(true);
                 
                 }else{
                     JOptionPane.showMessageDialog(null, "Не вірний номер карти чи пароль");
