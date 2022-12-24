@@ -21,7 +21,7 @@ public class deposit extends JFrame implements ActionListener{
         
 
         JLabel text = new JLabel("Введіть суму для депозиту");
-        text.setForeground(Color.WHITE);
+        text.setForeground(Color.black);
         text.setFont(new Font("System", Font.BOLD, 16));
         text.setBounds(170, 300, 400, 20);
         add(text);
