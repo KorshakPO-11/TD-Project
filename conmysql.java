@@ -6,7 +6,7 @@ public class conmysql{
     public conmysql(){  
         try{  
             Class.forName("com.mysql.jdbc.Driver");  
-            c =DriverManager.getConnection("jdbc:mysql:///bankdata","root","root123");    
+            c =DriverManager.getConnection("jdbc:mysql:///bank","root","root123");    
             s =c.createStatement(); 
            
           
