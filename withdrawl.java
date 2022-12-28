@@ -1,5 +1,7 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+
 import javax.swing.*;
 import java.util.*;
 
@@ -9,19 +11,20 @@ public class withdrawl extends JFrame implements ActionListener{
     
     
     
-    JTextField amount;
+    JTextField amount, pinaccept;
 
     JButton withdrawl, back;
 
-    String pin;
+    String cardno, password;
 
-    withdrawl(String pin){
-        this.pin = pin;
+    withdrawl(String cardno){
+        this.cardno = cardno;
+        
         setLayout(null);
         
 
         JLabel text = new JLabel("Введіть суму для зняття грошей");
-        text.setForeground(Color.WHITE);
+        text.setForeground(Color.black);
         text.setFont(new Font("System", Font.BOLD, 16));
         text.setBounds(170, 300, 400, 20);
         add(text);
@@ -30,6 +33,10 @@ public class withdrawl extends JFrame implements ActionListener{
         amount.setFont(new Font("Raleway", Font.BOLD, 22));
         amount.setBounds(170, 350, 320, 25);
         add(amount);
+
+        pinaccept = new JTextField();
+        pinaccept.setBounds(200, 520, 150, 30);
+        add(pinaccept);
 
         withdrawl = new JButton("Зняти гроші");
         withdrawl.setBounds(355, 485, 150, 30);
@@ -69,14 +76,24 @@ public class withdrawl extends JFrame implements ActionListener{
 
             }else{
                 try{
-                conmysql c = new conmysql();
-                String Query = "insert into bank values('"+pin+"', '"+date+"', 'Виведення грошей', '"+number+"')";
+                    conmysql c = new conmysql();
+                String pin = pinaccept.getText();
+                String Query2 = "select * from login where pin = '"+pin+"'";
+
+                
+                try{
+                    ResultSet rs = c.s.executeQuery(Query2);
+                    if(rs.next()){
+                String Query = "insert into bank values('"+cardno+"','"+pin+"', '"+date+"', 'Вивід грошей', '"+number+"')";
                 c.s.executeUpdate(Query);
                 JOptionPane.showMessageDialog(null, "З вашого рахунку знято "+number+" грн. \n Операція успішно виконана");
                 setVisible(false);
-                new transactionsmenu(pin).setVisible(true);
-
-
+                new transactionsmenu(cardno, password).setVisible(true);
+                    }else {
+                        JOptionPane.showMessageDialog(null, "Введіть дійсний пін, для підтвердження операції");
+                    }
+                }catch (Exception e){
+                    System.out.println(e);}
 
                 }catch (Exception e){
                     System.out.println(e); 
@@ -88,7 +105,7 @@ public class withdrawl extends JFrame implements ActionListener{
 
         }else if (ae.getSource() == back) {
             setVisible(false);
-            new transactionsmenu(pin).setVisible(true);
+            new transactionsmenu(cardno, password).setVisible(true);
             
         }
         
