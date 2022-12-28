@@ -1,22 +1,21 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+
 import javax.swing.*;
 import java.util.*;
 
 public class deposit extends JFrame implements ActionListener{
     
+    JTextField amount, pinaccept;
     
-    
-    
-    
-    JTextField amount;
-
     JButton deposit, back;
 
-    String pin;
+    String cardno, password;
 
-    deposit(String pin){
-        this.pin = pin;
+    deposit(String cardno){
+        this.cardno = cardno;
+       
         setLayout(null);
         
 
@@ -25,6 +24,9 @@ public class deposit extends JFrame implements ActionListener{
         text.setFont(new Font("System", Font.BOLD, 16));
         text.setBounds(170, 300, 400, 20);
         add(text);
+
+        JLabel pinac = new JLabel();
+        add(pinac);
 
         amount = new JTextField();
         amount.setFont(new Font("Raleway", Font.BOLD, 22));
@@ -35,6 +37,10 @@ public class deposit extends JFrame implements ActionListener{
         deposit.setBounds(355, 485, 150, 30);
         deposit.addActionListener(this);
         add(deposit);
+
+        pinaccept = new JTextField();
+        pinaccept.setBounds(200, 520, 150, 30);
+        add(pinaccept);
         
         back = new JButton("Назад");
         back.setBounds(355, 520, 150, 30);
@@ -61,22 +67,36 @@ public class deposit extends JFrame implements ActionListener{
 
     
     public void actionPerformed(ActionEvent ae) {
+
+        
         if (ae.getSource() == deposit) {
             String number = amount.getText();
+            
             Date date = new Date();
             if(number.equals("")){
                 JOptionPane.showMessageDialog(null, "Введіть кількість");
 
+            
             }else{
                 try{
-                conmysql c = new conmysql();
-                String Query = "insert into bank values('"+pin+"', '"+date+"', 'Депозит', '"+number+"')";
+                    conmysql c = new conmysql();
+                String pin = pinaccept.getText();
+                String Query2 = "select * from login where pin = '"+pin+"'";
+
+                
+                try{
+                    ResultSet rs = c.s.executeQuery(Query2);
+                    if(rs.next()){
+                String Query = "insert into bank values('"+cardno+"','"+pin+"', '"+date+"', 'Депозит', '"+number+"')";
                 c.s.executeUpdate(Query);
                 JOptionPane.showMessageDialog(null, "На ваш рахунок переведено "+number+" грн. \n Операція успішно виконана");
                 setVisible(false);
-                new transactionsmenu(pin).setVisible(true);
-
-
+                new transactionsmenu(cardno, password).setVisible(true);
+                    }else {
+                        JOptionPane.showMessageDialog(null, "enter the correct pin");
+                    }
+                }catch (Exception e){
+                    System.out.println(e);}
 
                 }catch (Exception e){
                     System.out.println(e); 
@@ -88,11 +108,13 @@ public class deposit extends JFrame implements ActionListener{
 
         }else if (ae.getSource() == back) {
             setVisible(false);
-            new transactionsmenu(pin).setVisible(true);
+            new transactionsmenu(cardno, password).setVisible(true);
             
         }
         
-        }
+     
+    
+    }
     
 
     public static void main(String args[]) {
