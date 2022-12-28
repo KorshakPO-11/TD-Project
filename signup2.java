@@ -56,6 +56,8 @@ public class signup2 extends JFrame implements ActionListener{
         pinnum.setBounds(330,500,200,30);
         add(pinnum);
 
+
+
         
 
         getContentPane().setBackground(Color.WHITE);
@@ -81,6 +83,7 @@ public class signup2 extends JFrame implements ActionListener{
         String password = passwordTextField.getText();
         String passwordacces = passwordaccesTextField.getText();
         
+        
 
         Random ran = new Random();
         long first7 = (ran.nextLong() % 90000000L) + 5040936000000000L;
@@ -97,7 +100,7 @@ public class signup2 extends JFrame implements ActionListener{
                 
                 
                 
-                if (!(Pattern.matches("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{8,20}$", password))) {
+                if (!(Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,20}$", password))) {
                     JOptionPane.showMessageDialog(null, "Введіть прийнятний пароль", "Помилка", JOptionPane.ERROR_MESSAGE);
                     return;
                 
@@ -113,14 +116,17 @@ public class signup2 extends JFrame implements ActionListener{
 
                 }else{
                     conmysql c = new conmysql();
-                    String Query1 = "insert into signup2 values('"+cardno+"','"+pin+"','"+password+"')";
+                    String Query1 = "insert into signup2 values('"+cardno+"','"+pin+"', '"+password+"' )";
 
                     c.s.executeUpdate(Query1); 
 
-                    String Query2 = "insert into login values('"+cardno+"','"+password+"', '"+pin+"')";
+                    String Query2 = "insert into login values('"+cardno+"','"+pin+"', '"+password+"' )";
 
                     c.s.executeUpdate(Query2);
+
                     JOptionPane.showMessageDialog(null, "Card Number: " + cardno + "\n Pin:"+ pin);
+                    setVisible(false);
+                    new transactionsmenu(cardno, password).setVisible(true);
                     
                     
                 }
