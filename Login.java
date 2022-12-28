@@ -11,7 +11,7 @@ import java.sql.*;
 public class Login extends JFrame implements ActionListener {
 
     JButton login, signup;
-    JTextField cardnoField, pinTextField, passwordTextField;
+    JTextField cardnoField, passwordTextField;
     JPasswordField passwordField;
     
 
@@ -40,9 +40,9 @@ public class Login extends JFrame implements ActionListener {
         password.setFont(new Font("Raleway", Font.BOLD, 28));
         add(password);
 
-        pinTextField = new JPasswordField();
-        pinTextField.setBounds(300, 220, 250, 40);
-        add(pinTextField);
+        passwordTextField = new JPasswordField();
+        passwordTextField.setBounds(300, 220, 250, 40);
+        add(passwordTextField);
 
         login = new JButton("Увійти");
         login.setBounds(300, 300, 100, 30);
@@ -67,14 +67,14 @@ public class Login extends JFrame implements ActionListener {
         if (ae.getSource() == login) {
             conmysql c = new conmysql();
             String cardno = cardnoField.getText();
-            String pin = pinTextField.getText();
+            String password = passwordTextField.getText();
             
-            String Query = "select * from login where cardno = '"+cardno+"' and pin = '"+pin+"' ";
+            String Query = "select * from login where cardno = '"+cardno+"' and password = '"+password+"' ";
             try{
                 ResultSet rs = c.s.executeQuery(Query);
                 if(rs.next()){
                     setVisible(false);
-                    new transactionsmenu(pin).setVisible(true);
+                    new transactionsmenu(cardno, password).setVisible(true);
                 
                 }else{
                     JOptionPane.showMessageDialog(null, "Не вірний номер карти чи пароль");
