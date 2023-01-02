@@ -19,12 +19,12 @@ public class Login extends JFrame implements ActionListener {
 
         setLayout(null);
 
-        JLabel text = new JLabel("Welcome to TDPbank");
+        JLabel text = new JLabel("Вітаємо в TDPbank");
         text.setBounds(200, 40, 400, 40);
         text.setFont(new Font("Osward", Font.BOLD, 38));
         add(text);
 
-        getContentPane().setBackground(Color.darkGray);
+        getContentPane().setBackground(Color.white);
 
         JLabel cardno = new JLabel("Номер карти");
         cardno.setBounds(120, 150, 200, 40);
