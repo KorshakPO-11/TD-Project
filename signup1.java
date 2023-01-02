@@ -193,17 +193,26 @@ public class signup1 extends JFrame implements ActionListener{
 
         try{
 
-            if (!(Pattern.matches("^[a-zA-Z0-9]+[@]{1}+[a-zA-Z0-9]+[.]{1}+[a-zA-Z0-9]+$", email))) 
-{
+            if (!(Pattern.matches("^[a-zA-Z0-9]+[@]{1}+[a-zA-Z0-9]+[.]{1}+[a-zA-Z0-9]+$", email))) {
             JOptionPane.showMessageDialog(null, "Please enter a valid email", "Error", JOptionPane.ERROR_MESSAGE);
             }
             
             
             else if (name.equals("")){
-                JOptionPane.showMessageDialog(null, "Данні відсутні");
+                JOptionPane.showMessageDialog(null, "Введіть ім'я");
+            }else if (fname.equals("")){
+                JOptionPane.showMessageDialog(null, "Введіть прізвище");
+            }else if (email.equals("")){
+                JOptionPane.showMessageDialog(null, "Введіть вашу електронну пошту");
+            }else if (city.equals("")){
+                JOptionPane.showMessageDialog(null, "Введіть назву вашого міста");
+            }else if (telnumber.equals("")){
+                JOptionPane.showMessageDialog(null, "Введіть ваш номер телефону");
+            }else if (adress.equals("")){
+                JOptionPane.showMessageDialog(null, "Введіть адресу вашого прошивання");
+            }
             
-
-            } else {
+            else {
                 
             
                 conmysql c = new conmysql();
