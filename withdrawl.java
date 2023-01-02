@@ -70,10 +70,12 @@ public class withdrawl extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
         if (ae.getSource() == withdrawl) {
             String number = amount.getText();
+            
             Date date = new Date();
             if(number.equals("")){
                 JOptionPane.showMessageDialog(null, "Введіть кількість");
 
+            
             }else{
                 try{
                     conmysql c = new conmysql();
@@ -90,26 +92,21 @@ public class withdrawl extends JFrame implements ActionListener{
                 setVisible(false);
                 new transactionsmenu(cardno, password).setVisible(true);
                     }else {
-                        JOptionPane.showMessageDialog(null, "Введіть дійсний пін, для підтвердження операції");
+                        JOptionPane.showMessageDialog(null, "Введіть PIN-код для підтвердження операції");
                     }
                 }catch (Exception e){
                     System.out.println(e);}
 
                 }catch (Exception e){
                     System.out.println(e); 
+                
                 }
+            }
+        }
+        }
                     
 
-            }
-
-
-        }else if (ae.getSource() == back) {
-            setVisible(false);
-            new transactionsmenu(cardno, password).setVisible(true);
             
-        }
-        
-        }
     
 
     public static void main(String args[]) {
