@@ -1,19 +1,27 @@
 
 import java.awt.event.*;
+import java.sql.ResultSet;
+
 import javax.swing.*;
+
+import java.awt.*;
+
+
 
 
 
 
 public class transactionsmenu extends JFrame implements ActionListener{
 
-    JLabel select, checkbalanse;
-    JButton deposit, withdrawl, cardpinchange, showbalance, passwordchange, exit;
+    JLabel select, checkbalanse, text;
+    JButton deposit, withdrawl, cardpinchange, passwordchange, showoperations, exit;
     
-    String pin;
+    String cardno, password;
    
-    transactionsmenu(String pin){
-        this.pin = pin;
+    transactionsmenu(String cardno, String password){
+        this.cardno = cardno;
+        this.password = password;
+        
 
         
         
@@ -36,20 +44,24 @@ public class transactionsmenu extends JFrame implements ActionListener{
         withdrawl.addActionListener(this);
         add(withdrawl);
 
-        cardpinchange = new JButton("Зміна пін коду");
+        cardpinchange = new JButton("Зміна паролю");
         cardpinchange.setBounds(170,543,150,35); 
+        cardpinchange.addActionListener(this);
         add(cardpinchange);
 
 
-        showbalance = new JButton("Переглянути баланс");
-        showbalance.setBounds(390,543,150,35); 
-        showbalance.addActionListener(this);
-        add(showbalance);
+        
+
+        showoperations = new JButton("Переглянути операції");
+        showoperations.setBounds(390,543,200,35); 
+        showoperations.addActionListener(this);
+        add(showoperations);
 
        
 
         exit = new JButton("вихід");
         exit.setBounds(170,588,150,35); 
+        exit.addActionListener(this);
         add(exit);
 
 
@@ -57,9 +69,27 @@ public class transactionsmenu extends JFrame implements ActionListener{
         setLocation(350, 10);
         setVisible(true);
 
-      
-
+        text = new JLabel();
+        text.setForeground(Color.BLACK);
+        text.setFont(new Font("System", Font.BOLD, 16));
+        text.setBounds(50, 150, 400, 35);
         
+        add(text);
+
+        int balance = 0;
+        try{
+            conmysql c = new conmysql();
+            ResultSet rs = c.s.executeQuery("select * from bank where cardno = '"+cardno+"'");
+            while (rs.next()) {
+                if (rs.getString("type").equals("Депозит")) {
+                    balance += Integer.parseInt(rs.getString("amount"));
+                } else {
+                    balance -= Integer.parseInt(rs.getString("amount"));
+                }
+            }
+        }catch(Exception e){}
+
+        text.setText("Ваш поточний баланс "+balance+ "грн.");
         
         
         
@@ -69,20 +99,24 @@ public class transactionsmenu extends JFrame implements ActionListener{
 
         if(ae.getSource() == deposit){
             setVisible(false);
-            new deposit(pin).setVisible(true);
-            
-        }if(ae.getSource() == showbalance){
-            setVisible(false);
-            new BalanceCheck(pin).setVisible(true);
+            new deposit(cardno).setVisible(true);
             
         }if(ae.getSource() == withdrawl){
             setVisible(false);
-            new withdrawl(pin).setVisible(true);
-        }
+            new withdrawl(cardno).setVisible(true);
+        }if(ae.getSource() == exit){
+            System.exit(0);
+        }if(ae.getSource() == cardpinchange){
+            setVisible(false);
+            new passwordchange(cardno, password).setVisible(true);
        
-    }
+        }if(ae.getSource() == showoperations){
+            setVisible(false);
+            new showoperations(cardno).setVisible(true);
+        }
+        }
     
     public static void main(String[] args){
-        new transactionsmenu("");
+        new transactionsmenu("", "");
     }
 }
