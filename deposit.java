@@ -11,6 +11,7 @@ public class deposit extends JFrame implements ActionListener{
     
     JButton deposit, back;
 
+
     String cardno, password;
 
     deposit(String cardno){
@@ -47,7 +48,8 @@ public class deposit extends JFrame implements ActionListener{
         back.addActionListener(this);
         add(back);
 
-        setSize(900, 900);
+
+        setSize(901, 900);
         setLocation(300, 0);
         setVisible(true);
 
@@ -93,7 +95,7 @@ public class deposit extends JFrame implements ActionListener{
                 setVisible(false);
                 new transactionsmenu(cardno, password).setVisible(true);
                     }else {
-                        JOptionPane.showMessageDialog(null, "enter the correct pin");
+                        JOptionPane.showMessageDialog(null, "Введіть PIN-код для підтвердження операції");
                     }
                 }catch (Exception e){
                     System.out.println(e);}
